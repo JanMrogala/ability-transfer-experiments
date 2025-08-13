@@ -1,0 +1,89 @@
+defaults:  
+  - _self_  
+  - override hydra/hydra_logging: disabled  
+  - override hydra/job_logging: disabled  
+  
+hydra:  
+  output_subdir: null  
+  run:  
+    dir: .
+
+# Data configuration
+data:
+  datapath: "data"
+  languages: ["en", "cs"]
+  train_file: "${data.datapath}/${data.type}/train.txt"
+  val_file: "${data.datapath}/cs/val.txt"
+  type: "${tokenized_data.tok}"  # By default, use same as tokenizer language
+  num_workers: 4
+
+  # If you want to subsample sets:
+  sampling:
+    # Set to True if you want to subsample your sets
+    sample_train_set: False
+    sample_test_set: True
+    sample_val_set: True
+
+    # This only applies if the above vars are set to True, otherwise uses all the data
+    num_train: 8192
+    num_val: 4096
+    num_test: 4096
+
+mix:
+  main_lang: "en"      # Primary language (cs or en)
+  proportion: 10       # Percentage of secondary language data to include (0-100)
+
+# Tokenizer configuration
+tokenizer:
+  vocab_size: 30000
+  tok_bs: 10000
+  num_workers: 32
+  output_dir: "tokenizers"
+  special_tokens: ["<|bos|>", "<|endoftext|>", "<|pad|>"]
+  bos_token: "<|bos|>"
+  eos_token: "<|endoftext|>"
+  pad_token: "<|pad|>"
+
+# Tokenized data configuration
+tokenized_data:
+  tok: "cs"  # Which tokenizer to use (en, cs, etc.)
+  output_dir: "data/tokenized/${data.type}"  # data_type_tokenizer
+  context_length: 512
+  truncation: true
+  padding: "max_length"
+  return_overflowing_tokens: false
+  return_length: true
+
+# Wandb configuration
+wandb:
+  proj_name: "ability_transfer"
+  model_name: "${data.type}_${now:%Y-%m-%d_%H-%M-%S}_base"
+  num_examples_reported: 100
+
+# Model configuration
+model:
+  name: "${wandb.model_name}"
+  output_dir: "models/${model.name}"
+  
+  batch_size: 80
+  accumulate_grad_batches: 16
+  block_size: 512
+  epochs: 10
+
+  n_head: 16
+  hidden_size: 768
+  max_position_embeddings: 512
+  n_layer: 4
+
+# Optimizer configuration
+optim:
+  lr: 5e-4  # Constant learning rate
+  weight_decay: 0.1
+  adam_beta1: 0.9
+  adam_beta2: 0.95
+
+# Evaluation configuration
+eval:
+  num_examples: 512
+  batch_size: 512
+  results_dir: "data/eval_results/${model.name}"

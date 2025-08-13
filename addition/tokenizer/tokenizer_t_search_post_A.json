@@ -1,0 +1,86 @@
+{
+  "version": "1.0",
+  "truncation": null,
+  "padding": null,
+  "added_tokens": [
+    {
+      "id": 22,
+      "content": "[BOS]",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": false,
+      "special": true
+    },
+    {
+      "id": 23,
+      "content": "[PAD]",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": false,
+      "special": true
+    },
+    {
+      "id": 24,
+      "content": "[MASK]",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": false,
+      "special": true
+    },
+    {
+      "id": 25,
+      "content": "[UNK]",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": false,
+      "special": true
+    },
+    {
+      "id": 26,
+      "content": "[EOS]",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": false,
+      "special": true
+    }
+  ],
+  "normalizer": null,
+  "pre_tokenizer": {
+    "type": "WhitespaceSplit"
+  },
+  "post_processor": null,
+  "decoder": null,
+  "model": {
+    "type": "WordLevel",
+    "vocab": {
+      ":": 0,
+      "RL": 1,
+      "0": 2,
+      "2": 3,
+      "5": 4,
+      "[": 5,
+      "D": 6,
+      "3": 7,
+      "6": 8,
+      "N": 9,
+      "A": 10,
+      "1": 11,
+      "]": 12,
+      "}": 13,
+      "TF": 14,
+      "Command:": 15,
+      "Stack:": 16,
+      "4": 17,
+      "U": 18,
+      ",": 19,
+      "Init_state:": 20,
+      "{": 21
+    },
+    "unk_token": "[UNK]"
+  }
+}
